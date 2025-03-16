@@ -1,5 +1,5 @@
 // middleware.ts
-
+//CSRF protection (CSRF protection assign CSRF token for every user serrion- its prevent CSRF attacks)
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";

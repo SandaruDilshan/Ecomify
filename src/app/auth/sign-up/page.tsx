@@ -1,4 +1,4 @@
-import { getCurrentSession } from '@/actions/auth'
+import { getCurrentSession, loginUser, registerUser } from '@/actions/auth'
 import React from 'react'
 import { redirect } from 'next/navigation'
 import SignUp from '@/components/auth/SignUp'
@@ -27,10 +27,17 @@ const SignupPage = async () => {
     }
 
     const { email, password } = parsed.data;
-    const { user, error } = await 
+    const { user, error } = await registerUser(email, password);
+    
+    if (error) {
+      return{message: error}
+    } else if (user) {
+      await loginUser(email, password);
+      await redirect('/');
+    }
   }
 
-  return (<SignUp />)
+  return (<SignUp action={action} />)
   
 }
 

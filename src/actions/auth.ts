@@ -8,7 +8,8 @@ import { cookies } from "next/headers";
 import { cache } from "react";
 import { error } from "console";
 
-export function generateSessionToken(): string {
+//Lucia auth
+export async function generateSessionToken(): Promise<string> {
     const bytes = new Uint8Array(20);
     crypto.getRandomValues(bytes);
     const token = encodeBase32LowerCaseNoPadding(bytes);
@@ -78,7 +79,7 @@ export type SessionValidationResult =
 
 
 
-// Coockies
+// Coockies (Lucia)
 export async function setSessionTokenCookie(token: string, expiresAt: Date): Promise<void> {
     const cookieStore = await cookies();
     cookieStore.set("session", token, {
@@ -117,8 +118,14 @@ export const hashPassword = async (password: string) => {
     return encodeHexLowerCase(sha256(new TextEncoder().encode(password))); 
 }
 
-export const verifyPassword = async (email: string, password: string) => {
+export const verifyPassword = async (password: string, hash: string) => {
     const passwordHash = await hashPassword(password);
+    return passwordHash === hash;
+}
+
+
+export const registerUser = async (email: string, passwordHash: string) => {
+    
     try {
         const user = await prisma.user.create({
             data: {
