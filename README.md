@@ -4,7 +4,7 @@ Tailwind
 Vercel for deployement
 PostgreSQL
 Stripe for handling payments
-Samity CMS - including new live content API feature
+Sanity CMS - including new live content API feature (npm install sanity -G / npm install sanity -G --legacy-peer-deps)
 
 zustand - lightweight state manegement library
 (npm instal zustand --legacy-peer-deps)
@@ -27,5 +27,3 @@ Lucia - Lucia is an authentication library for JavaScript and TypeScript applica
 ✅ Secure and flexible (supports database-backed sessions)
 ✅ Works with various databases (PostgreSQL, MySQL, SQLite, etc.)
 ✅ Compatible with frameworks like Next.js, SvelteKit, and Express)
-
-https://youtu.be/-_-kvPiMybw?si=RmptmCWeKrRff6hL

@@ -1,18 +1,15 @@
 import { getCurrentSession, loginUser, registerUser } from '@/actions/auth';
-import SignUp from '@/components/auth/SignUp';
+import SignIn from '@/components/auth/SignIn';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import zod from 'zod';
 
-const SignUpSchema = zod.object({
+const SignInSchema = zod.object({
     email: zod.string().email(),
     password: zod.string().min(5),
-    confirmPassword: zod.string().min(5),
-}).refine((data) => data.password === data.confirmPassword, {
-    message: "Password do not match",
 })
 
-const SignUpPage = async () => {
+const SignInPage = async () => {
     const { user } = await getCurrentSession();
 
     if (user) {
@@ -21,24 +18,23 @@ const SignUpPage = async () => {
 
     const action = async (prevState: any, formData: FormData) => {
         "use server";
-        const parsed = SignUpSchema.safeParse(Object.fromEntries(formData)); // Object.fromEntries is convert in to js object 
+        const parsed = SignInSchema.safeParse(Object.fromEntries(formData));
         if(!parsed.success) {
             return {
-                message: parsed.error.errors[0].message || "Invalid form data",
+                message: "Invalid form data",
             };
         }
 
         const { email, password } = parsed.data;
-        const { user, error } = await registerUser(email, password);
+        const { user, error } = await loginUser(email, password);
         if(error) {
             return { message: error };
-        } else if(user) {
-            await loginUser(email, password);
+        } else if(user) {    
             return redirect("/");
         }
     }
 
-    return <SignUp action={action} />;
+    return <SignIn action={action} />;
 };
 
-export default SignUpPage;
+export default SignInPage;
