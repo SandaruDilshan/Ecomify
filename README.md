@@ -5,6 +5,9 @@ Vercel for deployement
 PostgreSQL
 Stripe for handling payments
 Sanity CMS - including new live content API feature (npm install sanity -G / npm install sanity -G --legacy-peer-deps)
+saniti init
+create sanity types (schemas)
+sanity deploy
 
 zustand - lightweight state manegement library
 (npm instal zustand --legacy-peer-deps)
